@@ -4,10 +4,30 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/interfaces/http/server.js",
+    "dev": "nodemon src/interfaces/http/server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs"
+  "type": "commonjs",
+  "dependencies": {
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "kafkajs": "^2.2.4",
+    "mongodb": "^7.1.0",
+    "mongoose": "^9.2.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kareem-Amer1/kafka-microservice.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Kareem-Amer1/kafka-microservice/issues"
+  },
+  "homepage": "https://github.com/Kareem-Amer1/kafka-microservice#readme",
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
 }

@@ -1,0 +1,57 @@
+### Send a new activity log
+POST http://localhost:3000/api/logs
+Content-Type: application/json
+
+{
+  "userId": "user123",
+  "action": "LOGIN",
+  "metadata": {
+    "browser": "Chrome",
+    "ip": "192.168.1.1"
+  }
+}
+
+###
+
+### Send another log
+POST http://localhost:3000/api/logs
+Content-Type: application/json
+
+{
+  "userId": "user456",
+  "action": "PAGE_VIEW",
+  "metadata": {
+    "page": "/dashboard"
+  }
+}
+
+###
+
+### Get all logs
+GET http://localhost:3000/api/logs
+
+###
+
+### Get logs filtered by userId
+GET http://localhost:3000/api/logs?userId=user123
+
+###
+
+### Get logs with pagination
+GET http://localhost:3000/api/logs?page=1&limit=5
+
+###
+
+### Health check
+GET http://localhost:3000/health
+```
+
+Then in VS Code:
+1. Open `test.http`
+2. You'll see **"Send Request"** appear above each block
+3. Click it on the first POST request
+
+Watch your terminal — you should see:
+```
+Sent activity log for user: user123
+Processed log | User: user123 | Action: LOGIN
