@@ -1,5 +1,6 @@
 const { Kafka } = require('kafkajs');
 const ActivityLogRepository = require('../repositories/ActivityLogRepository');
+const ActivityLog = require('../../domain/entities/ActivityLog');
 
 const kafka = new Kafka({
   clientId: 'activity-consumer',
@@ -24,12 +25,20 @@ const startConsumer = async () => {
       eachMessage: async ({ topic, partition, message }) => {
         const logData = JSON.parse(message.value.toString());
 
+        // Use the domain entity to validate the message before persisting
+        const activityLog = new ActivityLog(logData);
+        activityLog.validate();
+        activityLog.markAsProcessed();
+
         await repository.save({
-          ...logData,
-          processedAt: new Date()
+          userId: activityLog.userId,
+          action: activityLog.action,
+          metadata: activityLog.metadata,
+          timestamp: activityLog.timestamp,
+          processedAt: activityLog.processedAt
         });
 
-        console.log(`Processed log | User: ${logData.userId} | Action: ${logData.action}`);
+        console.log(`Processed log | User: ${activityLog.userId} | Action: ${activityLog.action}`);
       }
     });
 

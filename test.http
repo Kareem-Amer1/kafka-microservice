@@ -1,9 +1,9 @@
-### Send a new activity log
+### Send a new activity log — LOGIN
 POST http://localhost:3000/api/logs
 Content-Type: application/json
 
 {
-  "userId": "user123",
+  "userId": "kemo",
   "action": "LOGIN",
   "metadata": {
     "browser": "Chrome",
@@ -13,7 +13,7 @@ Content-Type: application/json
 
 ###
 
-### Send another log
+### Send another log — PAGE_VIEW
 POST http://localhost:3000/api/logs
 Content-Type: application/json
 
@@ -27,31 +27,25 @@ Content-Type: application/json
 
 ###
 
-### Get all logs
+### Get all logs (paginated)
 GET http://localhost:3000/api/logs
 
 ###
 
 ### Get logs filtered by userId
-GET http://localhost:3000/api/logs?userId=user123
+GET http://localhost:3000/api/logs?userId=kemo
 
 ###
 
-### Get logs with pagination
-GET http://localhost:3000/api/logs?page=1&limit=5
+### Get logs filtered by action
+GET http://localhost:3000/api/logs?action=LOGIN&page=1&limit=5
+
+###
+
+### Get logs by date range
+GET http://localhost:3000/api/logs?startDate=2024-01-01&endDate=2026-12-31
 
 ###
 
 ### Health check
 GET http://localhost:3000/health
-```
-
-Then in VS Code:
-1. Open `test.http`
-2. You'll see **"Send Request"** appear above each block
-3. Click it on the first POST request
-
-Watch your terminal — you should see:
-```
-Sent activity log for user: user123
-Processed log | User: user123 | Action: LOGIN

@@ -18,7 +18,8 @@ services:
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
 
@@ -39,6 +40,7 @@ services:
       - MONGODB_URI=mongodb://mongodb:27017/activity-logs
       - KAFKA_BROKER=kafka:9092
       - PORT=3000
+      - KAFKAJS_NO_PARTITIONER_WARNING=1
     depends_on:
       - kafka
       - mongodb
