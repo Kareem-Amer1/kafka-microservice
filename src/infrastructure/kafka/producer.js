@@ -1,14 +1,15 @@
 const { Kafka } = require('kafkajs');
 
-const kafka = new Kafka({
-  clientId: 'activity-producer', 
-  brokers: [process.env.KAFKA_BROKER || 'localhost:9092']  
-});
-
-const producer = kafka.producer();
+let producer = null;
 
 const connectProducer = async () => {
   try {
+    const kafka = new Kafka({
+      clientId: 'activity-producer', 
+      brokers: [process.env.KAFKA_BROKER || 'localhost:9092']  
+    });
+    
+    producer = kafka.producer();
     await producer.connect();
     console.log('Kafka Producer connected');
   } catch (error) {

@@ -2,17 +2,17 @@ const { Kafka } = require('kafkajs');
 const ActivityLogRepository = require('../repositories/ActivityLogRepository');
 const ActivityLog = require('../../domain/entities/ActivityLog');
 
-const kafka = new Kafka({
-  clientId: 'activity-consumer',
-  brokers: [process.env.KAFKA_BROKER || 'localhost:9092']
-});
-
-const consumer = kafka.consumer({ groupId: 'activity-group' });
-
 const repository = new ActivityLogRepository();
 
 const startConsumer = async () => {
   try {
+    const kafka = new Kafka({
+      clientId: 'activity-consumer',
+      brokers: [process.env.KAFKA_BROKER || 'localhost:9092']
+    });
+
+    const consumer = kafka.consumer({ groupId: 'activity-group' });
+
     await consumer.connect();
     console.log('Kafka Consumer connected');
 
