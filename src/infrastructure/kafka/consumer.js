@@ -25,7 +25,7 @@ const startConsumer = async () => {
       eachMessage: async ({ topic, partition, message }) => {
         const logData = JSON.parse(message.value.toString());
 
-        // Use the domain entity to validate the message before persisting
+
         const activityLog = new ActivityLog(logData);
         activityLog.validate();
         activityLog.markAsProcessed();

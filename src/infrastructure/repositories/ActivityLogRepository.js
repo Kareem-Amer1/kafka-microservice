@@ -13,9 +13,9 @@ class ActivityLogRepository extends IActivityLogRepository {
 
     const logs = await ActivityLogModel
       .find(filter)
-      .sort({ timestamp: -1 })  
-      .skip(skip)                
-      .limit(Number(limit));     
+      .sort({ timestamp: -1 })
+      .skip(skip)
+      .limit(Number(limit));
 
     return logs;
   }

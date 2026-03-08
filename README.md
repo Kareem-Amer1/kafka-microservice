@@ -1,4 +1,4 @@
-# Kafka Microservice — User Activity Logs
+# Kafka Microservice - User Activity Logs
 
 ## Architecture Overview
 
