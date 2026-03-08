@@ -3,6 +3,6 @@ kind: ConfigMap
 metadata:
   name: activity-service-config
 data:
-  KAFKA_BROKER: "kafka:9092"
+  KAFKA_BROKER: "kafka-0.kafka-headless.default.svc.cluster.local:9092"
   PORT: "3000"
   KAFKAJS_NO_PARTITIONER_WARNING: "1"

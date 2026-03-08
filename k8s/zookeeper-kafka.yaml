@@ -34,11 +34,31 @@ spec:
   - port: 2181
     targetPort: 2181
 ---
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka-headless
+  labels:
+    app: kafka
+spec:
+  clusterIP: None
+  selector:
+    app: kafka
+  ports:
+  - name: tcp-client
+    port: 9092
+    targetPort: 9092
+  - name: tcp-controller
+    port: 9093
+    targetPort: 9093
+---
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: kafka
 spec:
+  serviceName: kafka-headless
   replicas: 1
   selector:
     matchLabels:
@@ -59,19 +79,20 @@ spec:
         - name: KAFKA_LISTENERS
           value: "PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093"
         - name: KAFKA_ADVERTISED_LISTENERS
-          value: "PLAINTEXT://kafka:9092"
+          value: "PLAINTEXT://kafka-0.kafka-headless.default.svc.cluster.local:9092"
         - name: KAFKA_CONTROLLER_LISTENER_NAMES
           value: "CONTROLLER"
         - name: KAFKA_LISTENER_SECURITY_PROTOCOL_MAP
           value: "PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT"
         - name: KAFKA_CONTROLLER_QUORUM_VOTERS
-          value: "1@kafka:9093"
+          value: "1@kafka-0.kafka-headless.default.svc.cluster.local:9093"
         - name: KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR
           value: "1"
         - name: KAFKA_AUTO_CREATE_TOPICS_ENABLE
           value: "true"
         ports:
         - containerPort: 9092
+        - containerPort: 9093
         resources:
           requests:
             memory: "512Mi"

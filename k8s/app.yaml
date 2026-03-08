@@ -14,7 +14,8 @@ spec:
     spec:
       containers:
       - name: activity-service
-        image: gcr.io/YOUR_PROJECT_ID/activity-service:latest
+        image: kafka-microservice-app:latest
+        imagePullPolicy: Never
         ports:
         - containerPort: 3000
         env:
